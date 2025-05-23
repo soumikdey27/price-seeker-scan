@@ -4,6 +4,8 @@ import ProductSearch from '@/components/ProductSearch';
 import SiteSelector from '@/components/SiteSelector';
 import ProductResults from '@/components/ProductResults';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { SearchType } from '@/types/search';
 import { Product } from '@/types/product';
 import { searchProducts } from '@/utils/searchService';
@@ -47,41 +49,47 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent mb-4">
-            PriceHunter
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Find the best deals across multiple e-commerce platforms. Search by text or upload an image to compare prices instantly.
-          </p>
-        </div>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <Header />
 
-        {/* Search Interface */}
-        <div className="max-w-4xl mx-auto space-y-8">
-          <ProductSearch onSearch={handleSearch} isLoading={isLoading} />
-          
-          <SiteSelector 
-            selectedSites={selectedSites} 
-            onSiteToggle={handleSiteToggle}
-          />
+      <div className="flex-grow">
+        <div className="container mx-auto px-4 py-8">
+          {/* Hero Section */}
+          <div className="text-center mb-12">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent mb-4">
+              PriceHunter
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Find the best deals across multiple e-commerce platforms. Search by text or upload an image to compare prices instantly.
+            </p>
+          </div>
 
-          {/* Loading State */}
-          {isLoading && (
-            <LoadingSpinner 
-              query={searchQuery} 
-              selectedSites={selectedSites}
+          {/* Search Interface */}
+          <div className="max-w-4xl mx-auto space-y-8">
+            <ProductSearch onSearch={handleSearch} isLoading={isLoading} />
+            
+            <SiteSelector 
+              selectedSites={selectedSites} 
+              onSiteToggle={handleSiteToggle}
             />
-          )}
 
-          {/* Results */}
-          {!isLoading && products.length > 0 && (
-            <ProductResults products={products} />
-          )}
+            {/* Loading State */}
+            {isLoading && (
+              <LoadingSpinner 
+                query={searchQuery} 
+                selectedSites={selectedSites}
+              />
+            )}
+
+            {/* Results */}
+            {!isLoading && products.length > 0 && (
+              <ProductResults products={products} />
+            )}
+          </div>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

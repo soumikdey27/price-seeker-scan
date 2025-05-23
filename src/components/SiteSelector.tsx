@@ -20,6 +20,11 @@ const sites: Site[] = [
   { id: 'walmart', name: 'Walmart', logo: '🏬', color: 'from-blue-600 to-blue-700' },
   { id: 'bestbuy', name: 'Best Buy', logo: '💻', color: 'from-yellow-500 to-blue-600' },
   { id: 'target', name: 'Target', logo: '🎯', color: 'from-red-500 to-red-600' },
+  { id: 'newegg', name: 'Newegg', logo: '🔌', color: 'from-orange-600 to-red-500' },
+  { id: 'etsy', name: 'Etsy', logo: '🧶', color: 'from-orange-400 to-red-400' },
+  { id: 'aliexpress', name: 'AliExpress', logo: '🌍', color: 'from-red-600 to-orange-500' },
+  { id: 'homedepot', name: 'Home Depot', logo: '🏠', color: 'from-orange-600 to-orange-700' },
+  { id: 'macys', name: 'Macy\'s', logo: '👔', color: 'from-red-700 to-red-800' },
 ];
 
 const SiteSelector = ({ selectedSites, onSiteToggle }: SiteSelectorProps) => {
@@ -35,7 +40,7 @@ const SiteSelector = ({ selectedSites, onSiteToggle }: SiteSelectorProps) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {sites.map((site) => {
             const isSelected = selectedSites.includes(site.id);
             const isDisabled = !isSelected && selectedSites.length >= 5;
