@@ -16,7 +16,7 @@ const Header = () => {
     <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 py-4 px-4 sm:px-6 lg:px-8 sticky top-0 z-10">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2">
+        <Link to="/" className="flex items-center space-x-3">
           <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-xl">
             PH
           </div>
@@ -26,7 +26,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <NavigationMenu>
+        <NavigationMenu className="mx-auto">
           <NavigationMenuList className="hidden sm:flex">
             <NavigationMenuItem>
               <Link 
@@ -64,7 +64,7 @@ const Header = () => {
         </NavigationMenu>
 
         {/* Mobile Menu Button */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <Link to="/login" className="hidden sm:flex">
             <Button variant="outline" className="flex items-center gap-2">
               <UserCircle className="h-5 w-5" />
