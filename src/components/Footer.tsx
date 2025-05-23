@@ -1,5 +1,6 @@
 
 import { Github, Twitter, Instagram } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -8,14 +9,14 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Logo and Description */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2">
               <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm">
                 PH
               </div>
               <span className="text-lg font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
                 PriceHunter
               </span>
-            </div>
+            </Link>
             <p className="text-gray-600 text-sm">
               Find the best deals across multiple e-commerce platforms with PriceHunter's smart price comparison.
             </p>
@@ -26,16 +27,16 @@ const Footer = () => {
             <h3 className="font-semibold text-gray-800 mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a href="/" className="text-gray-600 hover:text-blue-600 text-sm">Home</a>
+                <Link to="/" className="text-gray-600 hover:text-blue-600 text-sm">Home</Link>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-blue-600 text-sm">About Us</a>
+                <Link to="/about" className="text-gray-600 hover:text-blue-600 text-sm">About Us</Link>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-blue-600 text-sm">How It Works</a>
+                <Link to="/how-it-works" className="text-gray-600 hover:text-blue-600 text-sm">How It Works</Link>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-blue-600 text-sm">Contact</a>
+                <Link to="/contact" className="text-gray-600 hover:text-blue-600 text-sm">Contact</Link>
               </li>
             </ul>
           </div>
