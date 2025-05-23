@@ -1,10 +1,17 @@
 
-import { UserCircle } from 'lucide-react';
+import { UserCircle, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from '@/components/ui/navigation-menu';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const Header = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
     <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 py-4 px-4 sm:px-6 lg:px-8 sticky top-0 z-10">
       <div className="container mx-auto flex items-center justify-between">
@@ -18,7 +25,7 @@ const Header = () => {
           </span>
         </Link>
 
-        {/* Navigation */}
+        {/* Desktop Navigation */}
         <NavigationMenu>
           <NavigationMenuList className="hidden sm:flex">
             <NavigationMenuItem>
@@ -56,14 +63,63 @@ const Header = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Login Button */}
-        <Link to="/login">
-          <Button variant="outline" className="flex items-center gap-2">
-            <UserCircle className="h-5 w-5" />
-            <span>Login</span>
+        {/* Mobile Menu Button */}
+        <div className="flex items-center gap-2">
+          <Link to="/login" className="hidden sm:flex">
+            <Button variant="outline" className="flex items-center gap-2">
+              <UserCircle className="h-5 w-5" />
+              <span>Login</span>
+            </Button>
+          </Link>
+          <Button variant="ghost" size="icon" className="sm:hidden" onClick={toggleMobileMenu}>
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
-        </Link>
+        </div>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {mobileMenuOpen && (
+        <div className="sm:hidden bg-white py-4 px-4 absolute top-full left-0 right-0 border-b border-gray-200 shadow-lg">
+          <nav className="space-y-3 flex flex-col">
+            <Link 
+              to="/"
+              className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/about"
+              className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              About Us
+            </Link>
+            <Link 
+              to="/how-it-works"
+              className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              How It Works
+            </Link>
+            <Link 
+              to="/contact"
+              className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
+            <div className="pt-2 border-t border-gray-200">
+              <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="outline" className="flex items-center gap-2 w-full justify-center">
+                  <UserCircle className="h-5 w-5" />
+                  <span>Login</span>
+                </Button>
+              </Link>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
