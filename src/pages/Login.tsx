@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -8,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -32,6 +32,7 @@ const Login = () => {
     setTimeout(() => {
       toast.success('Login successful!');
       setIsSubmitting(false);
+      navigate('/account');
     }, 1500);
   };
 
