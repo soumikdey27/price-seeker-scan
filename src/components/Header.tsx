@@ -1,15 +1,33 @@
 
-import { UserCircle, Menu, X } from 'lucide-react';
+import { UserCircle, Menu, X, Settings, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from '@/components/ui/navigation-menu';
-import { Link } from 'react-router-dom';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  
+  // For demo purposes, let's assume user is logged in
+  // In a real app, this would come from context or auth state
+  const isLoggedIn = true;
+  const user = {
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    avatar: '', // empty for demo, will show initials
+  };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    toast.success('Logged out successfully!');
+    navigate('/');
   };
 
   return (
@@ -63,14 +81,52 @@ const Header = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Mobile Menu Button */}
+        {/* User Actions */}
         <div className="flex items-center gap-4">
-          <Link to="/login" className="hidden sm:flex">
-            <Button variant="outline" className="flex items-center gap-2">
-              <UserCircle className="h-5 w-5" />
-              <span>Login</span>
-            </Button>
-          </Link>
+          {isLoggedIn ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarFallback className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm">
+                      {user.name.split(' ').map(n => n[0]).join('')}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 bg-white" align="end" forceMount>
+                <div className="flex items-center justify-start gap-2 p-2">
+                  <div className="flex flex-col space-y-1 leading-none">
+                    <p className="font-medium">{user.name}</p>
+                    <p className="w-[200px] truncate text-sm text-muted-foreground">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/account" className="flex items-center">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Account Settings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout} className="text-red-600">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link to="/login" className="hidden sm:flex">
+              <Button variant="outline" className="flex items-center gap-2">
+                <UserCircle className="h-5 w-5" />
+                <span>Login</span>
+              </Button>
+            </Link>
+          )}
+          
           <Button variant="ghost" size="icon" className="sm:hidden" onClick={toggleMobileMenu}>
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
@@ -110,12 +166,34 @@ const Header = () => {
               Contact
             </Link>
             <div className="pt-2 border-t border-gray-200">
-              <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="outline" className="flex items-center gap-2 w-full justify-center">
-                  <UserCircle className="h-5 w-5" />
-                  <span>Login</span>
-                </Button>
-              </Link>
+              {isLoggedIn ? (
+                <div className="space-y-2">
+                  <Link to="/account" onClick={() => setMobileMenuOpen(false)}>
+                    <Button variant="outline" className="flex items-center gap-2 w-full justify-start">
+                      <Settings className="h-4 w-4" />
+                      <span>Account Settings</span>
+                    </Button>
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    className="flex items-center gap-2 w-full justify-start text-red-600 border-red-200 hover:bg-red-50"
+                    onClick={() => {
+                      handleLogout();
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>Log out</span>
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="outline" className="flex items-center gap-2 w-full justify-center">
+                    <UserCircle className="h-5 w-5" />
+                    <span>Login</span>
+                  </Button>
+                </Link>
+              )}
             </div>
           </nav>
         </div>
